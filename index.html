@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/29c2b75804.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <section>
+        <nav class="nav">
+            <ul class="nav_list">
+                <li><i class="fas fa-clipboard-list"></i> my todo list</li>
+                <li><i class="far fa-star"></i> important</li>
+            </ul>
+        </nav>
+
+
+        <div class="main">
+            <h1 class="main_heading">Todo List</h1>
+            <form class="input_container">
+                <input type="text" class="todo_input">
+                <div class="icon_container">
+                    <input type="checkbox" name="" id="add_to_important" class="add_to_important">
+                    <label class="add_to_important" for="add_to_important">
+                        <i class="far fa-star"></i>
+                    </label>
+                </div>
+            </form>
+            <div class="todo_lists">
+                <div class="remaining">
+                    <h1 class="remaining_heading">
+                        remaining
+                    </h1>
+
+
+                    <div class="remaining_list_container">
+                        <!-- <li class="remaining_list">
+                            <span class="todo">
+                                <span class="todo_name">
+                                    1. study javascript
+                                </span>
+                                <span class="created">
+                                    today
+                                </span>
+                            </span>
+
+                            <span class="button_container">
+                                <button class="important_btn">
+                                    <i class="far fa-star"></i>
+                                </button>
+                                <button class="completed_btn">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                                <button class="remove_btn">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                            </span>
+                        </li> -->
+                    </div>
+
+                </div>
+                <div class="completed">
+                    <h1 class="completed_heading">
+                        completed
+                    </h1>
+                    <ul class="completed_list_container">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
