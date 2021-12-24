@@ -6,7 +6,6 @@ const remainingListContainer = document.querySelector(
 const completedListContainer = document.querySelector(
   '.completed_list_container'
 );
-const addToImportant = document.querySelector('#add_to_important');
 
 const remainingList = [];
 const completedList = [];
@@ -35,14 +34,13 @@ form.addEventListener('submit', function (e) {
   const d = new Date();
   const todoDate = `${d.getDate()} ${years[d.getMonth()]} ${d.getFullYear()}`;
   const todoName = input.value;
-  isImportant = addToImportant.checked;
 
-  // createTodo(todoName, todoDate, isImportant);
+  createTodo(todoName, todoDate, false);
 
   remainingList.push({
     todoName: todoName,
     todoDate: todoDate,
-    isImportant: isImportant,
+    isImportant: false,
   });
   createTodo();
 
@@ -68,9 +66,18 @@ const createTodo = function () {
               </span>
 
               <span class="button_container">
-                   <button class="important_btn">
-                        <i class="far fa-star"></i>
-                    </button>
+
+                  <button class="important_btn">
+                  <input type="checkbox" id="add_to_important${
+                    i + 1
+                  }" class="isImportant_checkbox">
+                    <label for="add_to_important${
+                      i + 1
+                    }" class="add_to_important">
+                          <i class="far fa-star"></i>
+                    </label>
+                          
+                  </button>
                     <button class="completed_btn">
                         <i class="fas fa-check-circle"></i>
                     </button>
@@ -97,6 +104,9 @@ const createTodo = function () {
                     </span>
 
                     <span class="button_container">
+                        <button class="undo_btn">
+                            <i class="fas fa-undo-alt"></i>
+                        </button>
                         <button class="important_btn">
                             <i class="far fa-star"></i>
                         </button>
@@ -113,7 +123,16 @@ const createTodo = function () {
 const action = function () {
   remainingListContainer.addEventListener('click', function (e) {
     if (e.target.closest('.important_btn')) {
-      e.target.closest('.remaining_list').classList.toggle('important');
+      const element = e.target.closest('.remaining_list');
+      const n = element.dataset.index;
+
+      if (element.querySelector('.isImportant_checkbox').checked) {
+        remainingList[n].isImportant = true;
+        element.classList.add('important');
+      } else {
+        remainingList[n].isImportant = false;
+        element.classList.remove('important');
+      }
     }
 
     if (e.target.closest('.remove_btn')) {
@@ -139,8 +158,30 @@ const action = function () {
       }, 200);
     }
   });
-};
-action();
 
-// store data
-// fetch data
+  completedListContainer.addEventListener('click', function (e) {
+    if (e.target.closest('.remove_btn')) {
+      const element = e.target.closest('.completed_list');
+      element.classList.add('remove_animation');
+
+      const n = element.dataset.index;
+      completedList.splice(n, 1);
+      setTimeout(function () {
+        createTodo();
+      }, 200);
+    }
+
+    if (e.target.closest('.undo_btn')) {
+      const element = e.target.closest('.completed_list');
+      element.classList.add('remove_animation');
+
+      const n = element.dataset.index;
+      remainingList.push(completedList.splice(n, 1).pop());
+      setTimeout(function () {
+        createTodo();
+      }, 200);
+    }
+  });
+};
+
+action();
