@@ -1,11 +1,15 @@
 const input = document.querySelector('.todo_input');
 const form = document.querySelector('.input_container');
-const remainingList = document.querySelector('.remaining_list_container');
-const completedList = document.querySelector('.completed_list_container');
+const remainingListContainer = document.querySelector(
+  '.remaining_list_container'
+);
+const completedListContainer = document.querySelector(
+  '.completed_list_container'
+);
 const addToImportant = document.querySelector('#add_to_important');
 
-const remaining = [];
-const completed = [];
+const remainingList = [];
+const completedList = [];
 
 form.addEventListener('submit', function (e) {
   if (!input.value) {
@@ -28,25 +32,67 @@ form.addEventListener('submit', function (e) {
     'nov',
     'dec',
   ];
-  const date = new Date();
+  const d = new Date();
+  const todoDate = `${d.getDate()} ${years[d.getMonth()]} ${d.getFullYear()}`;
+  const todoName = input.value;
+  isImportant = addToImportant.checked;
 
-  const todoValue = input.value;
-  const todoDate = `${date.getDate()} ${
-    years[date.getMonth()]
-  } ${date.getFullYear()}`;
+  // createTodo(todoName, todoDate, isImportant);
 
-  createTodo(todoDate, todoValue, addToImportant.checked);
+  remainingList.push({
+    todoName: todoName,
+    todoDate: todoDate,
+    isImportant: isImportant,
+  });
+  createTodo();
+
   input.value = ``;
 });
 
-const createTodo = function (date, todoValue, isImportant) {
-  const todo = ` <li class="remaining_list  ${isImportant ? 'important' : ''}" >
+const createTodo = function () {
+  remainingListContainer.innerHTML = '';
+  completedListContainer.innerHTML = '';
+
+  remainingList.forEach(function (l, i) {
+    const todo = ` 
+    <span class="remaining_list  ${
+      l.isImportant ? 'important' : ''
+    }" data-index="${i}">
+          <span class="todo">
+              <span class="todo_name">
+                  ${i + 1}. ${l.todoName}
+              </span>
+              <span class="created">
+                  ${l.todoDate}
+              </span>
+              </span>
+
+              <span class="button_container">
+                   <button class="important_btn">
+                        <i class="far fa-star"></i>
+                    </button>
+                    <button class="completed_btn">
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button class="remove_btn">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </span>
+                </span>`;
+
+    remainingListContainer.insertAdjacentHTML('beforeEnd', todo);
+  });
+
+  completedList.forEach(function (l, i) {
+    const todo = ` <span class="completed_list  ${
+      l.isImportant ? 'important' : ''
+    } completed" data-index="${i}">
                     <span class="todo">
                         <span class="todo_name">
-                            ${todoValue}
+                          ${i + 1}. ${l.todoName}
                         </span>
                         <span class="created">
-                            ${date}
+                            ${l.todoDate}
                         </span>
                     </span>
 
@@ -54,31 +100,47 @@ const createTodo = function (date, todoValue, isImportant) {
                         <button class="important_btn">
                             <i class="far fa-star"></i>
                         </button>
-                        <button class="completed_btn">
-                            <i class="fas fa-check-circle"></i>
-                        </button>
                         <button class="remove_btn">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </span>
-                </li>`;
+                </span>`;
 
-  remainingList.insertAdjacentHTML('afterbegin', todo);
+    completedListContainer.insertAdjacentHTML('beforeEnd', todo);
+  });
 };
 
 const action = function () {
-  remainingList.addEventListener('click', function (e) {
+  remainingListContainer.addEventListener('click', function (e) {
     if (e.target.closest('.important_btn')) {
       e.target.closest('.remaining_list').classList.toggle('important');
     }
+
     if (e.target.closest('.remove_btn')) {
       const element = e.target.closest('.remaining_list');
       element.classList.add('remove_animation');
 
+      const n = element.dataset.index;
+      remainingList.splice(n, 1);
       setTimeout(function () {
-        element.remove();
-      }, 300);
+        createTodo();
+      }, 200);
+    }
+
+    if (e.target.closest('.completed_btn')) {
+      const element = e.target.closest('.remaining_list');
+      element.classList.add('completed_animation');
+
+      const n = element.dataset.index;
+      completedList.push(remainingList.splice(n, 1).pop());
+
+      setTimeout(function () {
+        createTodo();
+      }, 200);
     }
   });
 };
 action();
+
+// store data
+// fetch data
