@@ -47,6 +47,18 @@ form.addEventListener('submit', function (e) {
   input.value = ``;
 });
 
+const init = function () {
+  JSON.parse(localStorage.getItem('remainingList')).forEach(function (l) {
+    remainingList.push(l);
+  });
+
+  JSON.parse(localStorage.getItem('completedList')).forEach(function (l) {
+    completedList.push(l);
+  });
+
+  createTodo();
+};
+
 const createTodo = function () {
   remainingListContainer.innerHTML = '';
   completedListContainer.innerHTML = '';
@@ -118,6 +130,9 @@ const createTodo = function () {
 
     completedListContainer.insertAdjacentHTML('beforeEnd', todo);
   });
+
+  localStorage.setItem('remainingList', JSON.stringify(remainingList));
+  localStorage.setItem('completedList', JSON.stringify(completedList));
 };
 
 const action = function () {
@@ -185,3 +200,5 @@ const action = function () {
 };
 
 action();
+
+init();
