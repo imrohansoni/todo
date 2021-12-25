@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -24,8 +25,37 @@ section {
 .nav {
   background-color: black;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.creator {
+  padding-bottom: 20px;
+  font-family: 'Satisfy', cursive;
+  color: rgb(177, 177, 177);
+  text-transform: capitalize;
+}
+.main_header {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+}
+
+.important_count,
+.todo_count {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
 .nav_list {
   list-style: none;
   width: 100%;
@@ -35,14 +65,14 @@ section {
 
 .nav_list li {
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 15% 70% 15%;
   align-items: center;
   padding: 20px;
   cursor: pointer;
 }
 
 .nav_list li:hover {
-  background-color: rgb(29, 29, 29);
+  background-color: rgb(24, 24, 24);
 }
 
 .main {

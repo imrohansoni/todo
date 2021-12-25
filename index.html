@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/29c2b75804.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>To do list</title>
 </head>
 
 <body>
@@ -15,12 +15,24 @@
     <section>
         <nav class="nav">
             <ul class="nav_list">
-                <li><i class="fas fa-clipboard-list"></i> my todo list</li>
-                <li><i class="far fa-star"></i> important</li>
+                <li><i class="fas fa-clipboard-list"></i><span>
+                        my todo list
+                    </span><span class="todo_count">.</span></li>
+                <li><i class="far fa-star"></i>
+                    <span>
+                        important
+                    </span><span class="important_count">0</span></li>
             </ul>
+            <span class="creator">
+
+            </span>
         </nav>
         <div class="main">
-            <h1 class="main_heading">Todo List</h1>
+            <div class="main_header">
+                <h1 class="main_heading">Todo List</h1>
+                <h1 class="main_date">...</h1>
+            </div>
+
             <form class="input_container">
                 <input type="text" class="todo_input">
             </form>

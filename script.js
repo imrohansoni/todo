@@ -7,44 +7,66 @@ const completedListContainer = document.querySelector(
   '.completed_list_container'
 );
 
+const todoCount = document.querySelector('.todo_count');
+const importantCount = document.querySelector('.important_count');
+const creator = document.querySelector('.creator');
+const mainDate = document.querySelector('.main_date');
+
 const remainingList = [];
 const completedList = [];
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (!input.value) {
-    return;
-  }
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const years = [
+  'jan',
+  'feb',
+  'mar',
+  'apr',
+  'may',
+  'jun',
+  'jul',
+  'aug',
+  'sep',
+  'oct',
+  'nov',
+  'dec',
+];
 
-  const years = [
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'may',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'oct',
-    'nov',
-    'dec',
-  ];
-  const d = new Date();
-  const todoDate = `${d.getDate()} ${years[d.getMonth()]} ${d.getFullYear()}`;
-  const todoName = input.value;
+const init = function () {
+  const m = new Date();
+  mainDate.textContent = `${days[m.getDay()]}, ${m.getDate()} ${
+    years[m.getMonth()]
+  } ${m.getFullYear()}`;
 
-  createTodo(todoName, todoDate, false);
+  creator.textContent = `created by rohan soni`;
 
-  remainingList.push({
-    todoName: todoName,
-    todoDate: todoDate,
-    isImportant: false,
+  formSubmit();
+  action();
+  getData();
+};
+
+const formSubmit = function () {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!input.value) {
+      return;
+    }
+
+    const d = new Date();
+    const todoDate = `${d.getDate()} ${years[d.getMonth()]} ${d.getFullYear()}`;
+    const todoName = input.value;
+
+    createTodo(todoName, todoDate, false);
+
+    remainingList.push({
+      todoName: todoName,
+      todoDate: todoDate,
+      isImportant: false,
+    });
+    createTodo();
+
+    input.value = ``;
   });
-  createTodo();
-
-  input.value = ``;
-});
+};
 
 const getData = function () {
   JSON.parse(localStorage.getItem('remainingList')).forEach(function (l) {
@@ -59,6 +81,7 @@ const getData = function () {
 };
 
 const createTodo = function () {
+  todoCount.textContent = remainingList.length;
   remainingListContainer.innerHTML = '';
   completedListContainer.innerHTML = '';
 
@@ -135,6 +158,7 @@ const createTodo = function () {
 
 const action = function () {
   remainingListContainer.addEventListener('click', function (e) {
+    if (!e.target.closest('.remaining_list')) return;
     const element = e.target.closest('.remaining_list');
     const n = element.dataset.index;
 
@@ -165,6 +189,7 @@ const action = function () {
   });
 
   completedListContainer.addEventListener('click', function (e) {
+    if (!e.target.closest('.completed_list')) return;
     const element = e.target.closest('.completed_list');
     const n = element.dataset.index;
 
@@ -184,5 +209,4 @@ const action = function () {
   });
 };
 
-action();
-getData();
+init();
