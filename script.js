@@ -101,14 +101,8 @@ const createTodo = function () {
 
               <span class="button_container">
                   <button class="important_btn">
-                    <input type="checkbox" id="add_to_important${
-                      i + 1
-                    }" class="isImportant_checkbox">
-                      <label for="add_to_important${
-                        i + 1
-                      }" class="add_to_important">
-                            <i class="far fa-star"></i>
-                      </label>
+                   
+                       <i class="far fa-star"></i>
                   </button>
                   <button class="completed_btn">
                       <i class="fas fa-check-circle"></i>
@@ -163,14 +157,13 @@ const action = function () {
     const n = element.dataset.index;
 
     if (e.target.closest('.important_btn')) {
-      if (element.querySelector('.isImportant_checkbox').checked) {
+      if (!element.classList.contains('important')) {
         remainingList[n].isImportant = true;
         element.classList.add('important');
       } else {
         remainingList[n].isImportant = false;
         element.classList.remove('important');
       }
-      return;
     }
 
     if (e.target.closest('.remove_btn')) {

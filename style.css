@@ -102,10 +102,6 @@ section {
   font-size: 18px;
 }
 
-.isImportant_checkbox {
-  display: none;
-}
-
 .todo {
   display: flex;
   flex-direction: column;
