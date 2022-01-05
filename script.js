@@ -7,10 +7,6 @@ const completedListContainer = document.querySelector(
   '.completed_list_container'
 );
 
-const myTodoList = document.querySelector('.my_todo_list');
-const myImportantList = document.querySelector('.my_important_list');
-const myTodo = document.querySelector('.my_todo');
-
 const todoCount = document.querySelector('.todo_count');
 const importantCount = document.querySelector('.important_count');
 const creator = document.querySelector('.creator');
@@ -46,7 +42,6 @@ const init = function () {
   formSubmit();
   action();
   getData();
-  navigationMenu();
 };
 
 const formSubmit = function () {
@@ -204,15 +199,6 @@ const action = function () {
     setTimeout(function () {
       createTodo();
     }, 200);
-  });
-};
-
-const navigationMenu = function () {
-  myTodoList.addEventListener('click', function () {
-    myTodo.classList.replace('important_todo_active', 'todo_active');
-  });
-  myImportantList.addEventListener('click', function () {
-    myTodo.classList.replace('todo_active', 'important_todo_active');
   });
 };
 
