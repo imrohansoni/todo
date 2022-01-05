@@ -3,9 +3,13 @@ const form = document.querySelector('.input_container');
 const remainingListContainer = document.querySelector(
   '.remaining_list_container'
 );
+
 const completedListContainer = document.querySelector(
   '.completed_list_container'
 );
+
+const showImportantList = document.querySelector('.show_important_list');
+const showTodoList = document.querySelector('.show_todo_list');
 
 const todoCount = document.querySelector('.todo_count');
 const importantCount = document.querySelector('.important_count');
@@ -42,6 +46,7 @@ const init = function () {
   formSubmit();
   action();
   getData();
+  menuNavigation();
 };
 
 const formSubmit = function () {
@@ -54,8 +59,6 @@ const formSubmit = function () {
     const d = new Date();
     const todoDate = `${d.getDate()} ${years[d.getMonth()]} ${d.getFullYear()}`;
     const todoName = input.value;
-
-    createTodo(todoName, todoDate, false);
 
     remainingList.push({
       todoName: todoName,
@@ -77,15 +80,29 @@ const getData = function () {
     completedList.push(l);
   });
 
-  createTodo();
+  createTodo(false);
 };
 
-const createTodo = function () {
+const menuNavigation = function () {
+  showImportantList.addEventListener('click', function () {
+    createTodo(true);
+  });
+
+  showTodoList.addEventListener('click', function () {
+    createTodo(false);
+  });
+};
+
+const createTodo = function (importantList) {
   todoCount.textContent = remainingList.length;
   remainingListContainer.innerHTML = '';
   completedListContainer.innerHTML = '';
 
   remainingList.forEach(function (l, i) {
+    if (importantList) {
+      if (!l.isImportant) return;
+    }
+
     const todo = ` 
     <span class="remaining_list  ${
       l.isImportant ? 'important' : ''
@@ -177,7 +194,7 @@ const action = function () {
     }
 
     setTimeout(function () {
-      createTodo();
+      createTodo(false);
     }, 200);
   });
 
@@ -197,7 +214,7 @@ const action = function () {
     }
 
     setTimeout(function () {
-      createTodo();
+      createTodo(false);
     }, 200);
   });
 };
