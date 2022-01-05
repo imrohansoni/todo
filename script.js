@@ -8,6 +8,8 @@ const completedListContainer = document.querySelector(
   '.completed_list_container'
 );
 
+const navList = document.querySelector('.nav_list');
+
 const showImportantList = document.querySelector('.show_important_list');
 const showTodoList = document.querySelector('.show_todo_list');
 
@@ -85,16 +87,21 @@ const getData = function () {
 
 const menuNavigation = function () {
   showImportantList.addEventListener('click', function () {
+    navList.classList.replace('todo_active', 'important_active');
     createTodo(true);
   });
 
   showTodoList.addEventListener('click', function () {
+    navList.classList.replace('important_active', 'todo_active');
     createTodo(false);
   });
 };
 
 const createTodo = function (importantList) {
   todoCount.textContent = remainingList.length;
+  importantCount.textContent = remainingList.filter(
+    (l) => l.isImportant
+  ).length;
   remainingListContainer.innerHTML = '';
   completedListContainer.innerHTML = '';
 

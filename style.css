@@ -63,6 +63,14 @@ section {
   flex-direction: column;
 }
 
+.nav_list.important_active .show_important_list {
+  background-color: #363636;
+}
+
+.nav_list.todo_active .show_todo_list {
+  background-color: #363636;
+}
+
 .nav_list li {
   display: grid;
   grid-template-columns: 15% 70% 15%;
